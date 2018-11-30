@@ -1,10 +1,12 @@
 // A simple Java program to introduce a linked list 
 class LinkedList {
 	Patient head; // head of list
+	Patient tail; // tail of list
+	
 	Integer length = 0;
 
 	/* method to create a simple linked list with 3 nodes */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 
 		LinkedList llist = new LinkedList();
 
@@ -13,9 +15,9 @@ class LinkedList {
 		Patient third = new Patient("pps3", "third", "ln3", "pn3", "em3", "city3");
 		Patient fourth = new Patient("pps4", "fourth", "ln4", "pn4", "em4", "city4");
 
-		/*
-		 * llist.head.next = second; second.next = third; /
-		 **/
+		
+//		  llist.head.next = second; second.next = third; /
+		 
 
 		llist.append(first);
 		llist.append(second);
@@ -36,6 +38,7 @@ class LinkedList {
 		System.out.println();
 		llist.printList();
 	}
+	/**/
 
 	/*
 	 * This function is in LinkedList class. Inserts a new Node at front of the
@@ -128,6 +131,63 @@ class LinkedList {
 
 		temp_patient.next = next; // Unlink the deleted node from list
 		length--;
+	}
+	
+	public void deleteLastN(int count) {
+
+		if (count < 0 || count > length - 1) {
+			throw new IndexOutOfBoundsException(Integer.toString(count));
+		}
+		
+		if (head == null) {
+			return;
+		}
+
+		// Store head node
+		Patient temp_patient = head;
+
+		// If head needs to be removed
+		/*
+		if (count == 0) {
+			// Change head
+			head = temp_patient.next; 
+			length--;
+			return;
+		}
+		/**/
+
+		// Find previous node of the node to be deleted
+		for (int i = 0; temp_patient != null && i < length; i++) {
+			
+			
+			System.out.println("Previous node: " + temp_patient);
+			temp_patient = temp_patient.next;
+			
+			/*
+			if(length > (length - count)) {
+				System.out.println(length);
+				
+				length--;
+			}
+			/**/
+			
+//			
+//			System.out.println(length);
+		}
+		/*
+
+		// If position is more than number of ndoes
+		if (temp_patient == null || temp_patient.next == null) {
+			return;
+		}
+		
+		// Node temp->next is the node to be deleted
+		// Store pointer to the next of node to be deleted
+		Patient next = temp_patient.next.next;
+
+		temp_patient.next = next; // Unlink the deleted node from list
+		length--;
+		/**/
 	}
 
 	public void append(Patient new_patient) {

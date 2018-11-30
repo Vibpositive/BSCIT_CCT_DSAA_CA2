@@ -141,13 +141,35 @@ public class Hospital {
 
 		int output = scanner.nextInt();
 		return output;
-
 	}
 	
 	public void removePatient() {
-		
-	}
+		if (patientList.length == 0) {
+			System.out.println("There are " + patientList.length + " patients in the queue");
+		}
+		else {
+			int pid = getIntInput("Inform patient's ID");
+			Patient pt   = patientList.getPatientById(pid);
+			
+			patientList.delete(pt);
+		}
 
+		lineBreak();
+		display_menu();
+	}
+	
+	
+	public void removePatients() {
+		if (patientList.length == 0) {
+			System.out.println("There are " + patientList.length + " patients in the queue");
+		}
+		else {
+			int count = getIntInput("How many patients?");
+			patientList.deleteLastN(count);
+		}
+		lineBreak();
+		display_menu();
+	}
 
 	public void findPatient() {
 		if (patientList.length == 0) {
@@ -189,6 +211,10 @@ public class Hospital {
 		else if(choice == Operations.REMOVE_PATIENT.INT()) {
 			removePatient();
 		}
+
+		else if(choice == Operations.REMOVE_PATIENTS.INT()) {
+			removePatients();
+		}
 		else if(choice == Operations.EXIT.INT()) {
 			exit();
 		}
@@ -204,9 +230,7 @@ public class Hospital {
 	}
 
 	public static void main(String[] args) {
-		 new Hospital();
-		/*
-		for (int i = 0; i < 10; i++) {
+		for (int i = 1; i < 10; i++) {
 			patientList.append(new Patient(
 					"pps: " + Integer.toString(i),
 					"fn: " + Integer.toString(i),
@@ -215,10 +239,7 @@ public class Hospital {
 					"em: " + Integer.toString(i),
 					"ci: " + Integer.toString(i)));
 		}
-		
-		patientList.insertAt(1, new Patient("ppd 10", "ppd 10", "ppd 10", "ppd 10", "ppd 10", "ppd 10"));
-		patientList.printList();
-		/**/
+		new Hospital();
 	}
 
 }
