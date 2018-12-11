@@ -5,6 +5,7 @@ public enum Operations {
 	PRINT_ALL_PATIENTS(3, "Print all Patients"),
 	REMOVE_PATIENT(4, "Remove a patient from the queue"),
 	REMOVE_PATIENTS(5, "Remove the last n patients from the queue"),
+	UPDATE_PATIENT(6, "Update a patient"),
 	EXIT(0, "Exit");
 	
 	private final Object[] values;

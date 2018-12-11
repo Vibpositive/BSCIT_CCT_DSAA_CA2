@@ -97,6 +97,7 @@ class LinkedList {
 
 		if (position < 0 || position > length - 1) {
 			throw new IndexOutOfBoundsException(Integer.toString(position));
+			
 		}
 		
 		if (head == null) {
@@ -117,7 +118,7 @@ class LinkedList {
 		// Find previous node of the node to be deleted
 		for (int i = 0; temp_patient != null && i < position - 1; i++) {
 			temp_patient = temp_patient.next;
-			System.out.println("Previous node: " + temp_patient);
+			//System.out.println("Previous node: " + temp_patient);
 		}
 
 		// If position is more than number of ndoes
@@ -134,6 +135,16 @@ class LinkedList {
 	}
 	
 	public void deleteLastN(int count) {
+		
+		if (count < 0 || count > length) {
+			//throw new IndexOutOfBoundsException(Integer.toString(count));
+			System.out.println("Value is higher than lenght of the list");
+			return;
+		}
+		
+		if (head == null) {
+			return;
+		}
 		
 		int l = length;
 
@@ -187,7 +198,6 @@ class LinkedList {
 			insertAfter(prev_patient, new_patient);
 		}
 
-//		return n;
 	}
 	
 	public Patient getPatientById(int id){
@@ -260,43 +270,27 @@ class LinkedList {
 		length++;
 	}
 
-	/* This function prints contents of linked list starting from head */
+	/**
+	 * 
+	 */
 	public void printList() {
 		Patient n = head;
 		if(n == null) {
 			System.out.println("No patients added");
 		}
+		
+		int counter = 0;
+		
+		String leftAlignFormat = "| %-9d | %-9d | %-28s | %-9s | %-18s | %-35s | %-18s |%n";
+		System.out.println();
+		System.out.println("====================================================================================================================================================");
+		System.out.println();
+		System.out.format("|------------------------------------------------------------------ Patient List ------------------------------------------------------------------|%n");
+		System.out.format("| ID        | Position  | Name                         | PPS       | Phone Number       | Email                               | City                %n");
+		System.out.format("+-----------+-----------+------------------------------+-----------+--------------------+-------------------------------------+--------------------|%n");
+
 		while (n != null) {
-
-			System.out.println("===========================================");
-			
-			System.out.println();
-			System.out.print("PPS: ");
-			System.out.print(n.getPps());
-
-			System.out.println();
-			System.out.print("ID: ");
-			System.out.print(n.getPID());
-			System.out.println();
-			
-			System.out.print("Name: ");
-			System.out.print(n.getFirstName() + " " + n.getLastName());
-			
-			System.out.println();
-			System.out.print("City: ");
-			System.out.print(n.getCity());
-			
-			System.out.println();
-			System.out.print("Email: ");
-			System.out.print(n.getEmail());
-			
-			System.out.println();
-			System.out.print("Phone: ");
-			System.out.print(n.getPhoneNumber());
-			System.out.println();
-			
-			System.out.println("===========================================");
-			
+			System.out.printf(leftAlignFormat, n.getPID(), counter++ + 1, n.getFirstName() + " " + n.getLastName(), n.getPps(), n.getPhoneNumber(), n.getEmail(), n.getCity());
 			n = n.next;
 		}
 	}
