@@ -134,60 +134,13 @@ class LinkedList {
 	}
 	
 	public void deleteLastN(int count) {
-
-		if (count < 0 || count > length - 1) {
-			throw new IndexOutOfBoundsException(Integer.toString(count));
-		}
 		
-		if (head == null) {
-			return;
+		int l = length;
+
+		while(length > l - count) {
+			delete(length -1);
 		}
 
-		// Store head node
-		Patient temp_patient = head;
-
-		// If head needs to be removed
-		/*
-		if (count == 0) {
-			// Change head
-			head = temp_patient.next; 
-			length--;
-			return;
-		}
-		/**/
-
-		// Find previous node of the node to be deleted
-		for (int i = 0; temp_patient != null && i < length; i++) {
-			
-			
-			System.out.println("Previous node: " + temp_patient);
-			temp_patient = temp_patient.next;
-			
-			/*
-			if(length > (length - count)) {
-				System.out.println(length);
-				
-				length--;
-			}
-			/**/
-			
-//			
-//			System.out.println(length);
-		}
-		/*
-
-		// If position is more than number of ndoes
-		if (temp_patient == null || temp_patient.next == null) {
-			return;
-		}
-		
-		// Node temp->next is the node to be deleted
-		// Store pointer to the next of node to be deleted
-		Patient next = temp_patient.next.next;
-
-		temp_patient.next = next; // Unlink the deleted node from list
-		length--;
-		/**/
 	}
 
 	public void append(Patient new_patient) {
@@ -314,7 +267,36 @@ class LinkedList {
 			System.out.println("No patients added");
 		}
 		while (n != null) {
-			System.out.print(n.getFirstName() + " ");
+
+			System.out.println("===========================================");
+			
+			System.out.println();
+			System.out.print("PPS: ");
+			System.out.print(n.getPps());
+
+			System.out.println();
+			System.out.print("ID: ");
+			System.out.print(n.getPID());
+			System.out.println();
+			
+			System.out.print("Name: ");
+			System.out.print(n.getFirstName() + " " + n.getLastName());
+			
+			System.out.println();
+			System.out.print("City: ");
+			System.out.print(n.getCity());
+			
+			System.out.println();
+			System.out.print("Email: ");
+			System.out.print(n.getEmail());
+			
+			System.out.println();
+			System.out.print("Phone: ");
+			System.out.print(n.getPhoneNumber());
+			System.out.println();
+			
+			System.out.println("===========================================");
+			
 			n = n.next;
 		}
 	}

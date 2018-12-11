@@ -22,7 +22,7 @@ public class Hospital {
 
 	public void display_menu() {
 		System.out.println("What would you like to do: ");
-		
+
 		for (Operations op : Operations.values()) {
 			System.out.println(op.VAL() + ") " + op.DES());			
 		}
@@ -86,6 +86,7 @@ public class Hospital {
 		String ct;
 
 		if(patientList.length > 0) {
+			System.out.println(patientList.length);
 			emergency = yesOrNoQuestion("Is this an emergency?");
 			if(!emergency) {				
 				requirePositioning = yesOrNoQuestion("Would you like to choose a position for the patient?");
@@ -150,7 +151,6 @@ public class Hospital {
 		else {
 			int pid = getIntInput("Inform patient's ID");
 			Patient pt   = patientList.getPatientById(pid);
-			
 			patientList.delete(pt);
 		}
 
@@ -223,22 +223,26 @@ public class Hospital {
 			lineBreak();
 			display_menu();
 		}
+		
 	}
 
 	public Hospital() {
 		display_menu();
+		
 	}
 
 	public static void main(String[] args) {
+		/**/
 		for (int i = 1; i < 10; i++) {
 			patientList.append(new Patient(
-					"pps: " + Integer.toString(i),
-					"fn: " + Integer.toString(i),
-					"ln: " + Integer.toString(i),
-					"pn: " + Integer.toString(i),
-					"em: " + Integer.toString(i),
-					"ci: " + Integer.toString(i)));
+					Integer.toString(i),
+					Integer.toString(i),
+					Integer.toString(i),
+					Integer.toString(i),
+					Integer.toString(i),
+					Integer.toString(i)));
 		}
+		/**/
 		new Hospital();
 	}
 
