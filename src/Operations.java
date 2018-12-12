@@ -25,11 +25,5 @@ public enum Operations {
 	public String DES() {
         return (String) values[1];
     }
-	
-	/*
-	private Operations(int operation, String description) {
-		this.operation = operation;
-		this.description = description;
-	}
-	/**/
+
 }

@@ -1,124 +1,101 @@
-// A simple Java program to introduce a linked list 
-class LinkedList {
-	Patient head; // head of list
-	Patient tail; // tail of list
+/** Represents a Linked List that holds Patients.
+ * @author Gabriel Oliveira
+ * @author Carina Lins
+ * @version 1.0
+*/
+public class LinkedList implements LinkedListInterface {
 	
+	/** The head. */
+	Patient head;
+
+	/** The length. */
 	Integer length = 0;
 
-	/* method to create a simple linked list with 3 nodes */
-	/*public static void main(String[] args) {
-
-		LinkedList llist = new LinkedList();
-
-		Patient first = new Patient("pps1", "first", "ln1", "pn1", "em1", "city1");
-		Patient second = new Patient("pps2", "second", "ln2", "pn2", "em2", "city2");
-		Patient third = new Patient("pps3", "third", "ln3", "pn3", "em3", "city3");
-		Patient fourth = new Patient("pps4", "fourth", "ln4", "pn4", "em4", "city4");
-
-		
-//		  llist.head.next = second; second.next = third; /
-		 
-
-		llist.append(first);
-		llist.append(second);
-		llist.append(third);
-		llist.append(fourth);
-//		llist.insertAt(1, fourth);
-
-//		llist.delete(second);
-//		System.out.println();
-//		llist.printList();
-//		System.out.println();
-//		System.out.println(llist.getPatient(2));
-
-//		llist.printList();
-		
-		llist.printList();
-		llist.delete(0);
-		System.out.println();
-		llist.printList();
-	}
-	/**/
-
-	/*
-	 * This function is in LinkedList class. Inserts a new Node at front of the
-	 * list. This method is defined inside LinkedList class shown above
+	/**
+	 * @see LinkedListInterface#push(Patient)
 	 */
 	public void push(Patient patient) {
-		/*
-		 * 1 & 2: Allocate the Node & Put in the data
-		 */
+		//Holds the patient to be added to the top of the list
 		Patient new_patient = patient;
-
-		/* 3. Make next of new Node as head */
+		//Sets the top of the list as next of the new patient (pushes the head to the next position)
 		new_patient.next = head;
-
-		/* 4. Move the head to point to new Node */
+		//Sets the head as the new patient
 		head = new_patient;
+		//Increments the length of the list
 		length++;
 	}
 
-	/* Given a key, deletes the first occurrence of key in linked list */
-	void delete(Patient patient) {
-		// Store head node
+	/**
+	 * @see LinkedListInterface#delete(Patient)
+	 */
+	public void delete(Patient patient) {
+		//Holds the head
 		Patient temp_patient = head;
 		Patient prev = null;
 
-		// If head node itself holds the key to be deleted
-		// if (temp_patient += null)
+		// If head is the patient to be deleted
 		if (temp_patient == patient) {
+			//Sets the head as the next property of head (second in the list)
 			head = temp_patient.next; // Changed head
+			// decrements the length of the linked list
 			length--;
+			//stops execution
 			return;
 		}
 
-		// Search for the key to be deleted, keep track of the
-		// previous node as we need to change temp.next
+		// Search for the patient to be deleted
+		// until temp_patient is null and not equal to patient
 		while (temp_patient != null && temp_patient != patient) {
+			//sets the node before the current to temp_patient
 			prev = temp_patient;
+			//sets temp_patient to the next of itself
 			temp_patient = temp_patient.next;
 		}
 
-		// If key was not present in linked list
+		// If patient not present in the list
 		if (temp_patient == null) {
+			//stops execution
 			return;
 		}
 
-		// Unlink the node from linked list
+		// Unlink the patient to be deleted
 		prev.next = temp_patient.next;
+		// decrements the length of the linked list
 		length--;
 	}
 
-	/*
-	 * Given a reference (pointer to pointer) to the head of a list and a position,
-	 * deletes the node at the given position
+	/**
+	 * @see LinkedListInterface#delete(int)
 	 */
 	public void delete(int position) {
-
+		//If position is a negative number or higher than the length of the linked list
 		if (position < 0 || position > length - 1) {
+			//Throws an exception
 			throw new IndexOutOfBoundsException(Integer.toString(position));
-			
 		}
-		
+		//If there are no patients in the linked list
 		if (head == null) {
+			//stops the exectution
 			return;
 		}
 
-		// Store head node
+		// Holds head patient
 		Patient temp_patient = head;
 
-		// If head needs to be removed
+		// IF patient at the head needs to be removed
 		if (position == 0) {
-			// Change head
+			// sets the head to be the next of head
 			head = temp_patient.next; 
+			// decrements the length of the linked list
 			length--;
+			// stops the execution
 			return;
 		}
 
-		// Find previous node of the node to be deleted
+		// Finds the patient before the patient to be deleted
 		for (int i = 0; temp_patient != null && i < position - 1; i++) {
+			// sets it to temp_patient
 			temp_patient = temp_patient.next;
-			//System.out.println("Previous node: " + temp_patient);
 		}
 
 		// If position is more than number of ndoes
@@ -126,152 +103,214 @@ class LinkedList {
 			return;
 		}
 		
-		// Node temp->next is the node to be deleted
-		// Store pointer to the next of node to be deleted
+		// Sets next variable to be the next of the next of the temp_patient
 		Patient next = temp_patient.next.next;
-
+		// temp_patient next is set to be next
 		temp_patient.next = next; // Unlink the deleted node from list
+		// decrements the length
 		length--;
 	}
 	
+	/**
+	 * @see LinkedListInterface#deleteLastN(int)
+	 */
 	public void deleteLastN(int count) {
-		
+		//If position is a negative number or higher than the length of the linked list
 		if (count < 0 || count > length) {
-			//throw new IndexOutOfBoundsException(Integer.toString(count));
 			System.out.println("Value is higher than lenght of the list");
+			//stops the execution
 			return;
 		}
 		
+		// if head is null there is no patients in the list
 		if (head == null) {
+			// stops the execution
 			return;
 		}
 		
+		// sets a l variable to keep the original length of the list
 		int l = length;
 
+		// while list is longer the the desired lenght after deletion
+		// invoke delete informing the last position of the list
 		while(length > l - count) {
+
 			delete(length -1);
 		}
 
 	}
 
+	/**
+	 * @see LinkedListInterface#append(Patient)
+	 */
+	/* (non-Javadoc)
+	 * 
+	 */
 	public void append(Patient new_patient) {
-		/*
-		 * 1. Allocate the Node & 2. Put in the data 3. Set next as null
-		 */
-		// Node new_node = new Node(new_data);
-
-		/*
-		 * 4. If the Linked List is empty, then make the new node as head
-		 */
+		// if head is not set
+		// sets the new patient as head
+		// increments the length of the linked list
 		if (head == null) {
 			head = new_patient;
 			length++;
 			return;
 		}
 
-		/*
-		 * 4. This new node is going to be the last node, so make next of it as null
-		 */
+		// Patient is the last of the list
+		// sets its next to null
 		new_patient.next = null;
 
-		/* 5. Else traverse till the last node */
+		// sets last to be the head
 		Patient last = head;
 
+		// finds the current last patient
+		// if last has next
+		// sets last to be its next
+		// continues until last is null
 		while (last.next != null) {
 			last = last.next;
 		}
-
-		/* 6. Change the next of last node */
+		
+		// sets the current last next to be the new last
 		last.next = new_patient;
+		// increments the length of the linked list
 		length++;
 	}
 
-	public void insertAt(Integer position, Patient new_patient) {
+	/**
+	 * @see LinkedListInterface#insertAt(java.lang.Integer, Patient)
+	 */
+	public void insertAt(Integer position, Patient patient) {
+		//If position is a negative number or higher than the length of the linked list
+		// throws an error
 		if (position < 0 || position > length) {
 			throw new IndexOutOfBoundsException(Integer.toString(position));
 		}
-
+		
+		// if insertion happens to be at the head
+		// invokes push
+		// else
+		// gets the patient at the given position
+		// and insert new patient after that position
 		if (position == 0) {
-			push(new_patient);
+			push(patient);
 		} else {
 			Patient prev_patient = getPatient(position - 1);
-			insertAfter(prev_patient, new_patient);
+			insertAfter(prev_patient, patient);
 		}
 
 	}
 	
+	/**
+	 * @see LinkedListInterface#getPatientById(int)
+	 */
 	public Patient getPatientById(int id){
-		
+		// if there are no patients in the list
+		// stops the execution
+		// returns null
 		if(length == 0) {
 			return null;
 		}
 		
+		// sets current_patient to be head
 		Patient current_patient = head;
-		if(current_patient.getPID() == id) {
-			return current_patient;
-		}
-		
+
+		// traverses the linked list based on length
+		// checks for every patient if its id is equal to given id
+		// returns patient if so
+		// else assign the current patient to next
+		// continues traversing
 		for (int i = 0; i < length && current_patient != null; i++) {
 			if(current_patient.getPID() == id) {
 				return current_patient;
 			}
 			current_patient = current_patient.next;
 		}
+		
+		// no patient was found by the given id
+		// returns null
 		return null;
 	}
 	
+	/**
+	 * @see LinkedListInterface#getPatientPositionById(int)
+	 */
+	/* (non-Javadoc)
+	 * 
+	 */
 	public int getPatientPositionById(int id){
-		
+		// if there are no patients in the list
+		// stops the execution
+		// returns null
 		if(length == 0) {
 			return 0;
 		}
 		
+		// sets current_patient to be head
 		Patient current_patient = head;
-		if(current_patient.getPID() == id) {
-			return 0;
-		}
-		
+
+		// traverses the linked list based on length
+		// checks for every patient if its id is equal to given id
+		// returns patient id if so
+		// else assign the current patient to next
+		// continues traversing
 		for (int i = 0; i < length && current_patient != null; i++) {
 			if(current_patient.getPID() == id) {
 				return i;
 			}
 			current_patient = current_patient.next;
 		}
+		
+		// no patient was found by the given id
+		// returns null
 		return 0;
 	}
 
+	/**
+	 * @see LinkedListInterface#getPatient(int)
+	 */
 	public Patient getPatient(int position) {
+		// sets current patient to be head
 		Patient current_patient = head;
+		// traverses linked list based on position
+		// starts from 0 to positon
+		// until i >= position and current_patient is not null
+		// sets current patient to be next
+		// continues traversing
 		for (int i = 0; i < position && current_patient != null; i++) {
 			current_patient = current_patient.next;
 		}
 		return current_patient;
 	}
 
+	/**
+	 * @see LinkedListInterface#insertAfter(Patient, Patient)
+	 */
 	public void insertAfter(Patient prev_patient, Patient new_patient) {
-		/* 1. Check if the given Node is null */
+		// if prev_patient is null
+		// throws an exception
 		if (prev_patient == null) {
 			throw new NullPointerException("prev_patient must not be null");
 		}
+		// if new_patient is null
+		// throws an exception
 		if (new_patient == null) {
 			throw new NullPointerException("new_patient must not be null");
 		}
-
-		/*
-		 * 2. Allocate the Node & 3. Put in the data
-		 */
-		// Patient new_node = new_patient;
-
-		/* 4. Make next of new Node as next of prev_node */
+		
+		// sets the new_patient next to be the previous patient next
+		// inserting after previous_patient
 		new_patient.next = prev_patient.next;
 
-		/* 5. make next of prev_node as new_node */
+		// set the prev_patient next to be the newly inserted patient
 		prev_patient.next = new_patient;
+		
+		// increments the length of the linked list
 		length++;
 	}
 
 	/**
-	 * 
+	 * Prints the list.
 	 */
 	public void printList() {
 		Patient n = head;

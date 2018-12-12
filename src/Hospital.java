@@ -1,23 +1,20 @@
 import java.util.Scanner;
-
-/**
- * 
- */
-
-/**
- * @author Gabriel
- *
- */
+/** Hospital main program.
+ * @author Gabriel Oliveira
+ * @author Carina Lins
+ * @version 1.0
+*/
 public class Hospital {
-
-	/**
-	 * @param args
-	 * 
-	 */
-
+	
+	/** The scanner. */
 	private static Scanner scanner = new Scanner(System.in);
+	
+	/** The patient list. */
 	private static LinkedList patientList = new LinkedList();
 
+	/**
+	 * Display menu.
+	 */
 	public void displayMenu() {
 		System.out.println("What would you like to do: ");
 
@@ -29,24 +26,30 @@ public class Hospital {
 		pick();
 	}
 
+	/**
+	 * Line break.
+	 */
 	public void lineBreak() {
 		System.out.println();
 		System.out.println("====================================================================================================================================================");
 		System.out.println();
 	}
 
+	/**
+	 * Exit.
+	 */
 	public void exit() {
 		System.out.println("You've exited the program");
 		lineBreak();
 		System.exit(0);
 	}
 
-	public void isExit(String input) {
-		if (input.equals("99")) {
-			System.exit(0);
-		}
-	}
-
+	/**
+	 * Yes or no question.
+	 *
+	 * @param question the question
+	 * @return true, if input is yes or similar to it or 1
+	 */
 	public boolean yesOrNoQuestion(String question) {
 		System.out.print(question + " yes (1) | no (0) ");
 		switch (scanner.next()) {
@@ -70,6 +73,9 @@ public class Hospital {
 		}
 	}
 
+	/**
+	 * Adds the patient.
+	 */
 	public void addPatient() {
 
 		boolean requirePositioning = false;
@@ -128,11 +134,16 @@ public class Hospital {
 			patientList.append(pt);
 		}
 
-		int pp = patientList.getPatientPositionById(pt.getPID()) + 1;
-
+		lineBreak();
 		System.out.println("Patient: " + pt.getFirstName() + " " + pt.getLastName() + " added to the queue");
 	}
 
+	/**
+	 * Gets the int input.
+	 *
+	 * @param question the question
+	 * @return the int input
+	 */
 	public int getIntInput(String question) {
 
 		System.out.print(question + ": ");
@@ -144,45 +155,71 @@ public class Hospital {
 		return output;
 	}
 
+	/**
+	 * Removes the patient.
+	 */
 	public void removePatient() {
+		lineBreak();
 		if (patientList.length == 0) {
 			System.out.println("There are " + patientList.length + " patients in the queue");
 		} else {
 			int pid = getIntInput("Inform patient's ID");
 			Patient pt = patientList.getPatientById(pid);
 			patientList.delete(pt);
+			System.out.println("Patient " + pt.getFirstName() + " " + pt.getLastName() + " deleted successfully");
 		}
 	}
 
+	/**
+	 * Removes the patients.
+	 */
 	public void removePatients() {
+		lineBreak();
 		if (patientList.length == 0) {
 			System.out.println("There are " + patientList.length + " patients in the queue");
 		} else {
-			lineBreak();
 			int count = getIntInput("How many patients? (List length is: " + patientList.length + ")");
 			patientList.deleteLastN(count);
 			System.out.println(count + " Patients deleted successfully");
 		}
 	}
 
+	/**
+	 * Find patient.
+	 */
 	public void findPatient() {
+		lineBreak();
 		if (patientList.length == 0) {
 			System.out.println("There are " + patientList.length + " patients in the queue");
 		} else {
 			int pid = getIntInput("Inform patient's ID");
 
 			Patient pt = patientList.getPatientById(pid);
-			int position = patientList.getPatientPositionById(pt.getPID());
 
 			if (pt != null) {
-				System.out.println(pt.getFirstName() + " " + pt.getLastName() + "'s position is: " + (position + 1));
-			} else {
-				System.out.println("Patient ID not found in the Queue");
+				
+				int position = patientList.getPatientPositionById(pt.getPID());
+				
+				String leftAlignFormat = "| %-9d | %-9d | %-28s | %-9s | %-18s | %-35s | %-18s |%n";
+				System.out.println();
+				System.out.println("====================================================================================================================================================");
+				System.out.println();
+				System.out.format("|------------------------------------------------------------------ Patient Info ------------------------------------------------------------------|%n");
+				System.out.format("| ID        | Position  | Name                         | PPS       | Phone Number       | Email                               | City                %n");
+				System.out.format("+-----------+-----------+------------------------------+-----------+--------------------+-------------------------------------+--------------------|%n");
+
+				System.out.printf(leftAlignFormat, pt.getPID(), position+1, pt.getFirstName() + " " + pt.getLastName(), pt.getPps(), pt.getPhoneNumber(), pt.getEmail(), pt.getCity());
+				return;
 			}
+			lineBreak();
+			System.out.println("Patient ID not found in the Queue");
 		}
 
 	}
 
+	/**
+	 * Pick.
+	 */
 	public void pick() {
 
 		int choice = scanner.nextInt();
@@ -209,12 +246,18 @@ public class Hospital {
 		displayMenu();
 	}
 
+	/**
+	 * Prints the patient list.
+	 */
 	private void printPatientList() {
 		patientList.printList();
 	}
 
+	/**
+	 * Update patient.
+	 */
 	private void updatePatient() {
-		
+		lineBreak();
 		if (patientList.length == 0) {
 			System.out.println("There are " + patientList.length + " patients in the queue");
 			return;
@@ -255,19 +298,27 @@ public class Hospital {
 		pt.setPhoneNumber(pn);
 		pt.setEmail(em);
 		pt.setCity(ct);
-		
+		lineBreak();
 		System.out.println("Patient: " + pt.getPID() + " updated successfully");
 	}
 
+	/**
+	 * Instantiates a new hospital.
+	 */
 	public Hospital() {
 		displayMenu();
 	}
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		
 		/**/
 		for (int i = 1; i < 10; i++) {
-			patientList.append(new Patient("PPS No. " + i, "First Name " + 1, "Last Name " + i, "Phone Number " + i,
+			patientList.append(new Patient("PPS No. " + i, "First Name " + i, "Last Name " + i, "Phone Number " + i,
 					"Email: " + i, "City: " + i));
 		}
 		/**/
